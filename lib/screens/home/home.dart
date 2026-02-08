@@ -1,9 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logi/screens/home/widgets/delivery_record_card.dart';
 import 'package:logi/screens/home/widgets/searchbar.dart';
 import 'package:logi/screens/home/widgets/service_card.dart';
 import 'package:logi/screens/home/widgets/shipment_card.dart';
+import 'package:logi/screens/models/delivery_record.dart';
+import 'package:logi/screens/widgets/custom_bottom_bar.dart';
+
+final List<DeliveryRecord> deliveries = [
+  DeliveryRecord(
+    orderNumber: "762097837",
+    from: "Maputo",
+    to: "Beira",
+    createdAt: DateTime.now(),
+    status: .delivered,
+  ),
+
+  DeliveryRecord(
+    orderNumber: "876273292",
+    from: "Chimoio",
+    to: "Inhambane",
+    createdAt: DateTime.now(),
+    status: .delivered,
+  ),
+
+  DeliveryRecord(
+    orderNumber: "876273292",
+    from: "Chimoio",
+    to: "Inhambane",
+    createdAt: DateTime.now(),
+    status: .delivered,
+  ),
+  DeliveryRecord(
+    orderNumber: "876273292",
+    from: "Chimoio",
+    to: "Inhambane",
+    createdAt: DateTime.now(),
+    status: .delivered,
+  ),
+
+  DeliveryRecord(
+    orderNumber: "876273292",
+    from: "Chimoio",
+    to: "Inhambane",
+    createdAt: DateTime.now(),
+    status: .delivered,
+  ),
+];
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -15,6 +59,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         toolbarHeight: kToolbarHeight,
         leading: Row(
           children: [
@@ -27,7 +72,7 @@ class MyHomePage extends StatelessWidget {
         title: SizedBox(
           height: 30,
           child: Column(
-            crossAxisAlignment: .start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Diane Ribeiro", style: GoogleFonts.inter(fontSize: 12)),
               const SizedBox(height: 2),
@@ -55,80 +100,103 @@ class MyHomePage extends StatelessWidget {
       extendBody: true,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          crossAxisAlignment: .start,
-          children: [
-            const SizedBox(height: 10),
-            Searchbar(),
-            const SizedBox(height: 16),
-            Text(
-              "Nearest deliveries",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              Searchbar(),
+              const SizedBox(height: 16),
+              Text(
+                "Nearest deliveries",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            ShipmentTrackCard(),
-            const SizedBox(height: 16),
-            Text(
-              "Services",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
+              const SizedBox(height: 10),
+              ShipmentTrackCard(),
+              const SizedBox(height: 16),
+              Text(
+                "Services",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 75,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ServiceCard(
-                      title: "Create",
-                      icon: SvgPicture.asset(
-                        "assets/icons/bell.svg",
-                        width: 20,
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 75,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ServiceCard(
+                        title: "Create",
+                        icon: SvgPicture.asset(
+                          "assets/icons/bell.svg",
+                          width: 20,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ServiceCard(
-                      title: "Calculate",
-                      icon: SvgPicture.asset(
-                        "assets/icons/plus-minus.svg",
-                        width: 20,
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ServiceCard(
+                        title: "Calculate",
+                        icon: SvgPicture.asset(
+                          "assets/icons/plus-minus.svg",
+                          width: 20,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ServiceCard(
-                      title: "Receipts",
-                      icon: SvgPicture.asset(
-                        "assets/icons/receipt.svg",
-                        width: 20,
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ServiceCard(
+                        title: "Receipts",
+                        icon: SvgPicture.asset(
+                          "assets/icons/receipt.svg",
+                          width: 20,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            const SizedBox(height: 16),
-            Text(
-              "Delivery History",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
+              const SizedBox(height: 8 * 3),
+              Text(
+                "Delivery History",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 8),
-          ],
+              const SizedBox(height: 8),
+
+              Column(
+                children: deliveries.map((e) {
+                  final DeliveryRecord record = e;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: DeliveryHistoryCard(
+                      orderNumber: record.orderNumber,
+                      from: record.from,
+                      to: record.to,
+                      status: record.status,
+                    ),
+                  );
+                }).toList(),
+              ),
+
+              const SizedBox(height: 60 + kToolbarHeight),
+            ],
+          ),
         ),
+      ),
+
+      bottomNavigationBar: SafeArea(
+        child: CustomBottomBar(),
       ),
     );
   }
